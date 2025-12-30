@@ -10,7 +10,10 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Middleware
-app.use(cors()); // Enable CORS for frontend communication
+app.use(cors({
+  origin: ['http://localhost:3000', 'https://student-feedback-tracker-aaira.vercel.app', process.env.FRONTEND_URL].filter(Boolean),
+  credentials: true
+}));
 app.use(express.json()); // Parse JSON request bodies
 
 // MongoDB Connection
