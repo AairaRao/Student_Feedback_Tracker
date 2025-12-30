@@ -92,13 +92,6 @@ function App() {
         )}
       </button>
 
-      {/* Decorative background elements */}
-      <div className="bg-decoration">
-        <div className="bg-circle bg-circle-1"></div>
-        <div className="bg-circle bg-circle-2"></div>
-        <div className="bg-circle bg-circle-3"></div>
-      </div>
-
       <div className="container">
         {/* Header Section */}
         <header className="header">
