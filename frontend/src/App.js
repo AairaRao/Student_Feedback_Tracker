@@ -76,6 +76,59 @@ function App() {
     }
   };
 
+  // Function to delete feedback
+  const handleDeleteFeedback = async (id) => {
+    if (!window.confirm('Are you sure you want to delete this feedback?')) {
+      return;
+    }
+    
+    try {
+      const response = await fetch(`${API_URL}/feedback/${id}`, {
+        method: 'DELETE',
+      });
+      
+      const data = await response.json();
+      
+      if (data.success) {
+        setFeedbacks(prevFeedbacks => prevFeedbacks.filter(f => f._id !== id));
+      } else {
+        alert(data.message || 'Failed to delete feedback');
+      }
+    } catch (err) {
+      console.error('Error deleting feedback:', err);
+      alert('Unable to delete feedback. Please try again.');
+    }
+  };
+
+  // Function to update feedback
+  const handleUpdateFeedback = async (id, updatedData) => {
+    try {
+      const response = await fetch(`${API_URL}/feedback/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedData),
+      });
+      
+      const data = await response.json();
+      
+      if (data.success) {
+        setFeedbacks(prevFeedbacks => 
+          prevFeedbacks.map(f => f._id === id ? data.data : f)
+        );
+        return true;
+      } else {
+        alert(data.message || 'Failed to update feedback');
+        return false;
+      }
+    } catch (err) {
+      console.error('Error updating feedback:', err);
+      alert('Unable to update feedback. Please try again.');
+      return false;
+    }
+  };
+
   return (
     <div className={`app ${isDarkMode ? 'dark-theme' : 'light-theme'}`}>
       {/* Theme Toggle Button */}
@@ -137,6 +190,8 @@ function App() {
               loading={loading} 
               error={error}
               onRetry={fetchFeedbacks}
+              onDelete={handleDeleteFeedback}
+              onUpdate={handleUpdateFeedback}
             />
           </section>
         </main>

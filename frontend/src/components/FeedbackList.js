@@ -1,7 +1,7 @@
 import React from 'react';
 import FeedbackItem from './FeedbackItem';
 
-function FeedbackList({ feedbacks, loading, error, onRetry }) {
+function FeedbackList({ feedbacks, loading, error, onRetry, onDelete, onUpdate }) {
   // Loading state
   if (loading) {
     return (
@@ -42,7 +42,9 @@ function FeedbackList({ feedbacks, loading, error, onRetry }) {
       {feedbacks.map((feedback, index) => (
         <FeedbackItem 
           key={feedback._id || index} 
-          feedback={feedback} 
+          feedback={feedback}
+          onDelete={onDelete}
+          onUpdate={onUpdate}
         />
       ))}
     </div>
@@ -50,4 +52,3 @@ function FeedbackList({ feedbacks, loading, error, onRetry }) {
 }
 
 export default FeedbackList;
-
